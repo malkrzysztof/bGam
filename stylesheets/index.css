@@ -1,0 +1,12 @@
+.char {
+    display: flex;
+    flex-direction: row;
+}
+
+body {
+    background: yellow;
+}
+
+/* .char p1 {
+    display: block;
+} */
