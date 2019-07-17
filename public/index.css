@@ -1,0 +1,34 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.char {
+    width: 15%;
+    border: 2px solid black;
+}
+
+.char p1 {
+    display: flex;
+    flex-direction: row;
+}
+
+.char p2 {
+    display: flex;
+    flex-direction: column;
+}
+
+/* .navbar {
+    width: 25%;
+} */
+
+.inventory p1 {
+    display: flex;
+    flex-direction: row;
+}
+.inventory p2 {
+    display: flex;
+    flex-direction: column;
+}
