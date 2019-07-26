@@ -1,21 +1,13 @@
 const express = require('express');
+const bodyParser = require ('body-parser');
 const app     = express();
 const mysql     = require('mysql');
-const bodyParser = require ('body-parser');
 const session  = require('express-session');
 const cookieParser = require('cookie-parser');
-var morgan = require('morgan');
-const indexRoutes = require("./routes");
+const morgan = require('morgan');
+const indexRoutes = require("./routes/index");
 const loginRoutes = require("./routes/login")
 
-
-
-app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(express.static(__dirname + "/public"));
-
-app.set("view engine", "ejs");
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -28,6 +20,22 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+app.use(session({
+  secret: 'dupa123',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 60000 }
+}))
+
+app.use(morgan('dev'));
+// app.use(bodyParser.text({ type: 'text/html' }))
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(express.static(__dirname + "/public"));
+
+app.set("view engine", "ejs");
+
   db = mysql.createConnection({
   host     : 'sefin.atthost24.pl',
   user     : '6687_bgame',
@@ -41,13 +49,8 @@ db.connect(function(err) {
   console.log("Connected!");
 });
 
-db.query('SELECT * FROM users', function (err, result) {
-  if (err) throw err;
-  console.log("Result: " + result[0].user_email)
-});
-
-app.use("/", indexRoutes);
-app.use("login", loginRoutes);
+app.use("/", indexRoutes),
+app.use("/login", loginRoutes)
 
 app.listen(3000, () => {
     console.log('Server running on port: 3000');
