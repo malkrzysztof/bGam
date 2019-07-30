@@ -1,15 +1,17 @@
 const express = require("express");
+const session = require('express-session');
 const router = express.Router();
+const middleware = require("../middleware");
 
-var char_id = 1
+router.get("/", middleware.isLoggedIn, (req, res, next) => {
+  char_id = req.session.char_id
 
-sql = "SELECT * FROM `6687_bgame`.`characters` WHERE char_id="+ char_id +";" + 
+  sql = "SELECT * FROM `6687_bgame`.`characters` WHERE char_id="+ char_id +";" + 
       "SELECT * FROM `6687_bgame`.`waepon` WHERE char_id="+ char_id +";" +
       "SELECT * FROM `6687_bgame`.`armor` WHERE char_id="+ char_id +";" +
       "SELECT * FROM `6687_bgame`.`helmet` WHERE char_id="+ char_id +";" +
       "SELECT * FROM `6687_bgame`.`legs` WHERE char_id="+ char_id +";"
 
-router.get("/", (req, res, next) => {
   db.query(sql, function (err, char) {
     if (err) {
       throw err;
@@ -24,7 +26,5 @@ router.get("/", (req, res, next) => {
     } 
   });
 });
-
-
 
 module.exports = router;
