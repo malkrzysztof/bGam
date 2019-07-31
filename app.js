@@ -30,6 +30,11 @@ app.use(session({
   cookie: { maxAge: 20000 }
 }))
 
+app.use(function(req, res, next) {
+  res.locals.email = req.session.email;
+  next();
+});
+
 app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));

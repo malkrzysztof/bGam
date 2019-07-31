@@ -37,10 +37,10 @@
                 </ul>
             </div>
             <div class="inventory">
-                <p2>Head - <%= helmet[0].item_name %></p2>
-                <p2>Armor - <%= armor[0].item_name %> </p2>
-                <p2>Weapon - <%= waepon[0].item_name %> </p2>
-                <p2>Legs - <%= legs[0].item_name %></p2>
+                <p2>Head - <%= helmet[0] == undefined ? 'brak' : helmet[0].item_name %></p2>
+                <p2>Armor - <%= armor[0] == undefined ? 'brak' : armor[0].item_name %> </p2>
+                <p2>Weapon - <%= waepon[0] == undefined ? 'brak' : waepon[0].item_name %> </p2>
+                <p2>Legs - <%= legs[0] == undefined ? 'brak' : legs[0].item_name %></p2>
             </div>
         </div>
     </body>

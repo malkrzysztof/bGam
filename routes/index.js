@@ -17,6 +17,7 @@ router.get("/", middleware.isLoggedIn, (req, res, next) => {
       throw err;
     } else {
       JSON.stringify(char)
+      //handle empty results from db
       res.render("index", {char: char[0],
                            waepon: char[1], 
                            armor: char[2],
