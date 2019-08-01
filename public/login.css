@@ -1,4 +1,14 @@
+body {
+    background-image: url("./login.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
 #loginForm {
     width: 40%;
     margin: 10% auto;
+}
+
+label {
+    color: white;
 }

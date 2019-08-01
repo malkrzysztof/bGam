@@ -1,8 +1,9 @@
-.header {
+.page {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    justify-content: space-around;
+    justify-content: space-between;
+    margin-top: 2%;
 }
 
 .char {
@@ -19,10 +20,6 @@
     display: flex;
     flex-direction: column;
 }
-
-/* .navbar {
-    width: 25%;
-} */
 
 .inventory p1 {
     display: flex;

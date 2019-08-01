@@ -18,5 +18,8 @@
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
     "nodemon": "^1.19.1"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.10.0"
   }
 }

@@ -5,6 +5,7 @@ const middleware = require("../middleware");
 
 router.get("/", middleware.isLoggedIn, (req, res, next) => {
   char_id = req.session.char_id
+  email = req.session.email
 
   sql = "SELECT * FROM `6687_bgame`.`characters` WHERE char_id="+ char_id +";" + 
       "SELECT * FROM `6687_bgame`.`waepon` WHERE char_id="+ char_id +";" +
@@ -17,7 +18,6 @@ router.get("/", middleware.isLoggedIn, (req, res, next) => {
       throw err;
     } else {
       JSON.stringify(char)
-      //handle empty results from db
       res.render("index", {char: char[0],
                            waepon: char[1], 
                            armor: char[2],
