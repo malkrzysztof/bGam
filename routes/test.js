@@ -3,7 +3,7 @@ const router = express.Router();
 const moment = require('moment')
 
 router.get("/", (req, res) => {
-    var data = moment().format("YYYY-MM-DD HH:MM")    
+    var data = moment().format(("YYYY-MM-DD HH:mm:ss"))
     res.send("from test route data: " + data)
 })
 

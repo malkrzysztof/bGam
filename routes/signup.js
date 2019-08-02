@@ -10,7 +10,7 @@ router.get("/", (req, res, next) => {
 router.post("/", (req, res, next) => {
 	var email = req.body.email;
 	var password = req.body.password;
-	createDate = moment().format("YYYY-MM-DD HH:MM")
+	createDate = moment().format(("YYYY-MM-DD HH:mm:ss"))
 	if (email && password) {
 		db.query('SELECT * FROM users WHERE user_email = ?',
 		 [email], function(err, results, fields) {
