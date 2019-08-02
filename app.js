@@ -7,7 +7,9 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const indexRoutes = require("./routes/index");
 const loginRoutes = require("./routes/login");
+const signupRoutes = require("./routes/signup");
 const logoutRoutes = require("./routes/logout");
+const testRoutes = require("./routes/test")
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -56,7 +58,9 @@ db.connect(function(err) {
 
 app.use("/", indexRoutes),
 app.use("/login", loginRoutes),
-app.use("/logout", logoutRoutes)
+app.use("/signup", signupRoutes),
+app.use("/logout", logoutRoutes),
+app.use("/test", testRoutes)
 
 app.listen(3000, () => {
     console.log('Server running on port: 3000');
