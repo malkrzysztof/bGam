@@ -2,6 +2,7 @@ body {
     background-image: url("./login.jpg");
     background-position: center;
     background-size: cover;
+    background-attachment: fixed;
 }
 
 #loginForm {

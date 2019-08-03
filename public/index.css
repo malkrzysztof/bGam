@@ -1,31 +1,68 @@
+body {
+    background-image: url("./login.jpg");
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
 .page {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-top: 2%;
+    color: #8ba060;
 }
 
 .char {
     width: 15%;
-    border: 2px solid black;
+    /* border: 2px solid black; */
+    
 }
 
 .char p1 {
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
 .char p2 {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
 }
 
-.inventory p1 {
+.inventory {
+    /* border: 2px solid black; */
+}
+
+.inventory table {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    text-align: center;
 }
-.inventory p2 {
-    display: flex;
-    flex-direction: column;
+
+#helmet {
+    border: 2px solid black;
+    width: 100px;
+    height: 100px;
+}
+
+#weapon {
+    border: 2px solid black;
+    width: 100px;
+    height: 100px;
+}
+
+#armor {
+    border: 2px solid black;
+    width: 100px;
+    height: 100px;
+}
+
+#legs {
+    border: 2px solid black;
+    width: 100px;
+    height: 100px;
 }

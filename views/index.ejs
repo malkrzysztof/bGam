@@ -45,9 +45,9 @@
                 <hr>
                 <p2>HP: <%= char[0].char_hp %></p2>
                 <p2>Strenght: <%= char[0].char_str %></p2>
-                <p2>Dexterity: <%= char[0].dexterity %></p2>
+                <p2>Dexterity: <%= char[0].char_dex %></p2>
                 <p2>Intelligence: <%= char[0].char_int %></p2>
-                <p2>Vitality: <%= char[0].char_vitality %></p2>
+                <p2>Vitality: <%= char[0].char_vit %></p2>
                 <p2>Gold: <%= char[0].char_gold %></p2>
                 <p2>Silver: <%= char[0].char_silver %></p2>
             </div>
@@ -57,10 +57,33 @@
             </div>
 
             <div class="inventory">
-                <p2>Head - <%= helmet[0] == undefined ? 'brak' : helmet[0].item_name %></p2>
+                <!-- <p2>Head - <%= helmet[0] == undefined ? 'brak' : helmet[0].item_name %></p2>
                 <p2>Armor - <%= armor[0] == undefined ? 'brak' : armor[0].item_name %> </p2>
                 <p2>Weapon - <%= waepon[0] == undefined ? 'brak' : waepon[0].item_name %> </p2>
                 <p2>Legs - <%= legs[0] == undefined ? 'brak' : legs[0].item_name %></p2>
+                 -->
+                <table>
+                    <tbody>
+                    <tr>
+                    <td>&nbsp;</td>
+                    <td id="helmet"><%= helmet[0] == undefined ? 'brak' : helmet[0].item_name %></td>
+                    <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                    <td id="weapon"><%= waepon[0] == undefined ? 'brak' : waepon[0].item_name %></td>
+                    <td id="armor"><%= armor[0] == undefined ? 'brak' : armor[0].item_name %></td>
+                    <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                    <td>&nbsp;</td>
+                    <td id="legs"><%= legs[0] == undefined ? 'brak' : legs[0].item_name %></td>
+                    <td>&nbsp;</td>
+                    </tr>
+                    </tbody>
+                    </table>
+
+
+
             </div>
         </div>
     </body>
