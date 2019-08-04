@@ -35,6 +35,10 @@ router.post("/", (req, res, next) => {
 							console.log('Create ' + email + ' at ' + createDate)
 							// console.log(results.insertId)
 							userID = results.insertId
+							startingHelmet();
+							startingArmor();
+							startingLegs();
+							startingWaepon();
 							db.query('INSERT INTO ' +
 								'characters(user_id, char_name, char_moves, char_hp, char_str, char_dex, char_int, char_vit) ' +
 								'value(?, ?, 99, 25, 10, 10, 10, 10)', [userID, charName],
@@ -59,6 +63,27 @@ router.post("/", (req, res, next) => {
 				res.send("Please enter Username, Password and Character name!")
 			}
 	});
+
+function startingHelmet() {
+	db.query('INSERT INTO helmet(user_id, item_name, physical_armor, energy_armor)' +
+				'values(?, "Czapka", 2, 2)', [userID])
+};
+
+function startingArmor() {
+	db.query('INSERT INTO armor(user_id, item_name, physical_armor, energy_armor)' +
+				'values(?, "Koszula", 4, 4)', [userID])
+};
+
+function startingLegs() {
+	db.query('INSERT INTO legs(user_id, item_name, physical_armor, energy_armor)' +
+				'values(?, "Trzewiki", 1, 1)', [userID])
+};
+
+function startingWaepon() {
+	db.query('INSERT INTO waepon(user_id, item_name, physical_dmg, energy_dmg)' +
+				'values(?, "Kij", 3, 0)', [userID])
+};
+
 
 module.exports = router;
 
