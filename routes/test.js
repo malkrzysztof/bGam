@@ -8,14 +8,8 @@ const someOtherPlaintextPassword = 'not_bacon';
 
 
 router.get("/", (req, res) => {
-    bcrypt.genSalt(saltRounds, function(err, salt) {
-        bcrypt.hash(myPlaintextPassword, salt, function(err, hash) {
-            console.log(hash)
-            bcrypt.compare(myPlaintextPassword,hash).then(function(res){
-                console.log(hash)
-            })
-        });
-    });
+    res.render("test")
 })
+
 
 module.exports = router;

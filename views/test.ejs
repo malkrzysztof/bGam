@@ -60,56 +60,48 @@
                 <table>
                     <tbody>
                     <tr>
-                        <td>&nbsp;</td>
-                        <% if(helmet[0] == undefined){ %>
-                            <td id="helmet">BRAK</td>
-                        <% } else { %>
-                            <td id="helmet" data-toggle="popover" data-html="true" data-trigger="hover" 
-                                title="<%= helmet[0] == undefined ? 'brak' : helmet[0].item_name %>" 
+                            <td>&nbsp;</td>
+                        <%= helmet[0] == undefined ? %>
+                            <td id="helmet"> BRAK</td>
+                        <%= : %>
+                            <td id="helmet" data-toggle="popover" data-html="true" data-trigger="hover" title="<%= helmet[0].item_name %>" 
                                 data-content=
-                                    "Physical armor: <%= helmet[0] == undefined ? 'brak' : helmet[0].physical_armor %> <br />
-                                    Energy armor: <%= helmet[0] == undefined ? 'brak' : helmet[0].energy_armor %>" >
+                                    "Physical armor: <%= helmet[0].physical_armor %> <br />
+                                    Energy armor: <%= helmet[0].energy_armor %>" >
                                     <%= helmet[0] == undefined ? 'brak' : helmet[0].item_name %></td>
-                        <% } %>
-                        <td>&nbsp;</td>
-                    </tr>
+                                    <td>&nbsp;</td>
 
+
+
+                    <!-- <td>&nbsp;</td>
+                    <td id="helmet" data-toggle="popover" data-html="true" data-trigger="hover" title="<%= helmet[0].item_name %>"
+                    data-content=
+                        "Physical armor: <%= helmet[0].physical_armor %> <br />
+                        Energy armor: <%= helmet[0].energy_armor %>" >
+                        <%= helmet[0] == undefined ? 'brak' : helmet[0].item_name %></td>
+                    <td>&nbsp;</td> -->
+                    </tr>
                     <tr>
-                        <% if(waepon[0] == undefined){ %>
-                            <td id="waepon">BRAK</td>
-                        <% } else { %>
-                            <td id="waepon" data-toggle="popover" data-html="true" data-trigger="hover"
-                                title="<%= waepon[0] == undefined ? 'brak' : waepon[0].item_name %>"
-                                data-content=
-                                    "Physical damage: <%= waepon[0] == undefined ? 'brak' : waepon[0].physical_dmg %> <br />
-                                    Energy damage: <%= waepon[0] == undefined ? 'brak' : waepon[0].energy_dmg %>">
-                                    <%= waepon[0] == undefined ? 'brak' : waepon[0].item_name %></td>
-                        <% } %>
-                            
-                        <% if(armor[0] == undefined){ %>
-                            <td id="armor">BRAK</td>
-                        <% } else { %>
-                            <td id="armor" data-toggle="popover" data-html="true" data-trigger="hover" 
-                                title="<%= armor[0] == undefined ? 'brak' : armor[0].item_name %>" 
-                                data-content=
-                                    "Physical armor: <%= armor[0] == undefined ? 'brak' : armor[0].physical_armor %> <br />
-                                    Energy armor: <%= armor[0] == undefined ? 'brak' : armor[0].energy_armor %>" >
-                                    <%= armor[0] == undefined ? 'brak' : armor[0].item_name %></td>
-                        <% } %>
+                    <td id="weapon" data-toggle="popover" data-html="true" data-trigger="hover" title="<%= waepon[0].item_name %>"
+                        data-content=
+                            "Physical dmg: <%= waepon[0].physical_dmg %> <br />
+                            Energy dmg: <%= waepon[0].energy_dmg %>" >
+                            <%= waepon[0] == undefined ? 'brak' : waepon[0].item_name %></td>
+
+                    <td id="armor" data-toggle="popover" data-html="true" data-trigger="hover" title="<%= waepon[0].item_name %>"
+                        data-content=
+                            "Physical armor: <%= armor[0].physical_armor %> <br />
+                            Energy armor: <%= armor[0].energy_armor %>" >
+                            <%= armor[0] == undefined ? 'brak' : armor[0].item_name %></td></span>
                     <td>&nbsp;</td>
                     </tr>
                     <tr>
                     <td>&nbsp;</td>
-                        <% if(legs[0] == undefined){ %>
-                            <td id="legs">BRAK</td>
-                        <% } else { %>
-                            <td id="legs" data-toggle="popover" data-html="true" data-trigger="hover" 
-                                title="<%= legs[0] == undefined ? 'brak' : legs[0].item_name %>" 
-                                data-content=
-                                    "Physical armor: <%= legs[0] == undefined ? 'brak' : legs[0].physical_armor %> <br />
-                                    Energy armor: <%= legs[0] == undefined ? 'brak' : legs[0].energy_armor %>" >
-                                    <%= legs[0] == undefined ? 'brak' : legs[0].item_name %></td>
-                        <% } %>
+                    <td id="legs" data-toggle="popover" data-html="true" data-trigger="hover" title="<%= waepon[0].item_name %>"
+                        data-content=
+                            "Physical armor: <%= legs[0].physical_armor %> <br />
+                            Energy armor: <%= legs[0].energy_armor %>" >
+                            <%= legs[0] == undefined ? 'brak' : legs[0].item_name %></td></span>
                     <td>&nbsp;</td>
                     </tr>
                     </tbody>
