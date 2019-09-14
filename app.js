@@ -9,7 +9,8 @@ const indexRoutes = require("./routes/index");
 const loginRoutes = require("./routes/login");
 const signupRoutes = require("./routes/signup");
 const logoutRoutes = require("./routes/logout");
-const testRoutes = require("./routes/test")
+const testRoutes = require("./routes/test");
+const adventureRoutes = require("./routes/adventure")
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -44,10 +45,10 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
 db = mysql.createConnection({
-  host     : 
-  user     : 
-  password : 
-  database : 
+  host     : "sefin.atthost24.pl",
+  user     : "6687_bgame",
+  password : "Brat!@34",
+  database : "6687_bgame",
   multipleStatements: true
 });
 
@@ -60,7 +61,8 @@ app.use("/", indexRoutes),
 app.use("/login", loginRoutes),
 app.use("/signup", signupRoutes),
 app.use("/logout", logoutRoutes),
-app.use("/test", testRoutes)
+app.use("/test", testRoutes),
+app.use("/adventure", adventureRoutes)
 
 app.listen(3000, () => {
     console.log('Server running on port: 3000');
