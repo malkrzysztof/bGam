@@ -53,7 +53,27 @@
             </div>
             
             <div class="content">
-                    CONTENT, CONTENT, CONTENT, CONTENT
+                
+
+                    <div class="card">
+                        <div class="card-header bg-secondary row">
+                            <p class="card-text"></p><%= mobs[0].mob_name %>HP: <%= mobs[0].min_hp %> - <%= mobs[0].max_hp %> </p>
+                            <p class="float-right">Level: <%= mobs[0].lvl %></p>
+                        </div>
+                        <div class="card-body bg-dark row">
+                          <h5 class="card-title"></h5>
+                            <div class="col-sm">
+                                <p class="card-text">Physical Damage: <%= mobs[0].min_physical_dmg %> - <%= mobs[0].max_physical_dmg %> </p>
+                                <p class="card-text">Energy Damage: <%= mobs[0].min_energy_dmg %> - <%= mobs[0].max_energy_dmg %> </p>
+                            </div>
+                            <div class="col-sm">
+                                <p class="card-text">Physical Armor: <%= mobs[0].min_physical_armor %> - <%= mobs[0].max_physical_armor %> </p>
+                                <p class="card-text">Energy Armor: <%= mobs[0].min_energy_armor %> - <%= mobs[0].max_energy_armor %> </p>
+                            </div>
+                          <a href="#" class="btn btn-secondary float-right">Fight!</a>
+                        </div>
+                      </div>
+
             </div>
 
             <div class="inventory">

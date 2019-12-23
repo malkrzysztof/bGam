@@ -11,7 +11,8 @@ router.get("/", middleware.isLoggedIn, (req, res, next) => {
       "SELECT * FROM `6687_bgame`.`waepon` WHERE user_id="+ user_id +";" +
       "SELECT * FROM `6687_bgame`.`armor` WHERE user_id="+ user_id +";" +
       "SELECT * FROM `6687_bgame`.`helmet` WHERE user_id="+ user_id +";" +
-      "SELECT * FROM `6687_bgame`.`legs` WHERE user_id="+ user_id +";"
+      "SELECT * FROM `6687_bgame`.`legs` WHERE user_id="+ user_id +";" +
+      "SELECT * FROM `6687_bgame`.`mob`"
 
   db.query(sql, function (err, char) {
     if (err) {
@@ -21,8 +22,9 @@ router.get("/", middleware.isLoggedIn, (req, res, next) => {
                            waepon: char[1], 
                            armor: char[2],
                            helmet: char[3],
-                           legs: char[4]
-                          });
+                           legs: char[4],
+                           mobs: char[5]
+      });
     } 
   });
 });
