@@ -41,6 +41,10 @@ body {
     height: 500px;
 }
 
+.card {
+    margin-bottom: 20px;
+}
+
 .inventory {
     /* border: 2px solid black; */
 }

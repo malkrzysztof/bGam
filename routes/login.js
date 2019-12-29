@@ -12,6 +12,7 @@ router.get("/", (req, res, next) => {
 router.post("/", (req, res, next) => {
 	var email = req.body.email;
 	var password = req.body.password;
+	var user_id = req.params.id
 	var lastLogin = moment().format(("YYYY-MM-DD HH:mm:ss"))
 	if (email && password) {
 		db.query('SELECT * FROM users WHERE user_email = ?',[email], function(error, results, fields) {

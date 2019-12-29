@@ -3,7 +3,7 @@ const session = require('express-session');
 const router = express.Router();
 const middleware = require("../middleware");
 
-router.get("/", middleware.isLoggedIn, (req, res, next) => {
+router.get("/", middleware.isLoggedIn, (req, res) => {
   user_id = req.session.user_id
   email = req.session.email
 
@@ -17,12 +17,13 @@ router.get("/", middleware.isLoggedIn, (req, res, next) => {
     if (err) {
       throw err;
     } else {
-      res.render("index", {char: char[0],
-                           waepon: char[1], 
-                           armor: char[2],
-                           helmet: char[3],
-                           legs: char[4]
-                          });
+      res.render("index", {
+        char: char[0],
+        waepon: char[1], 
+        armor: char[2],
+        helmet: char[3],
+        legs: char[4]
+      });
     } 
   });
 });

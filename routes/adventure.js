@@ -25,7 +25,7 @@ router.get("/", middleware.isLoggedIn, (req, res, next) => {
                            legs: char[4],
                            mobs: char[5]
       });
-    } 
+    }
   });
 });
 
