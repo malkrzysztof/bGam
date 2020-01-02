@@ -5,15 +5,17 @@
     <% for (i = 0; i < mobs.length; i++){ %>
         <div class="card">
             <div class="card-header bg-secondary">
-                <p class="card-text"></p><%= mobs[i].mob_name %> Level: <%= mobs[i].lvl %> HP: <%= mobs[i].min_hp %> - <%= mobs[i].max_hp %></p>
+                <span class="card-text row">
+                    <p class="col-sm"><%= mobs[i].mob_name %></p><p class="col-sm"> Level: <%= mobs[i].lvl %></p><p class="col-sm"> HP: <%= mobs[i].min_hp %> - <%= mobs[i].max_hp %></p>
+                </span>
             </div>
-            <div class="card-body bg-dark row">
+            <div class="card-body bg-dark row" style="margin-left: 0; margin-right: 0;">
                 <h5 class="card-title">Stats</h5>
-                <div class="col-sm">
+                <div class="col-md">
                     <p class="card-text">Physical Damage: <%= mobs[i].min_physical_dmg %> - <%= mobs[i].max_physical_dmg %> </p>
                     <p class="card-text">Energy Damage: <%= mobs[i].min_energy_dmg %> - <%= mobs[i].max_energy_dmg %> </p>
                 </div>
-                <div class="col-sm">
+                <div class="col-md">
                     <p class="card-text">Physical Armor: <%= mobs[i].min_physical_armor %> - <%= mobs[i].max_physical_armor %> </p>
                     <p class="card-text">Energy Armor: <%= mobs[i].min_energy_armor %> - <%= mobs[i].max_energy_armor %> </p>
                 </div>

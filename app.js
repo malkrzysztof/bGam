@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 });
 
 app.use(session({
-  secret: '',
+  secret: 'alw@ysSecret23%$Shhh!',
   resave: true,
   cookie: true,
   saveUninitialized: true,
@@ -45,9 +45,9 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
 db = mysql.createConnection({
-  host     : "",
+  host     : "sefin.atthost24.pl",
   user     : "6687_bgame",
-  password : "",
+  password : "Brat!@34",
   database : "6687_bgame",
   multipleStatements: true
 });
