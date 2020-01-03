@@ -36,7 +36,7 @@ router.get("/:mob_name", middleware.isLoggedIn, (req, res) => {
                                     mob: char[5]
                 });
             }
-        } await return char)
+        })
         return data
     }
 });
