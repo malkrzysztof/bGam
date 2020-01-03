@@ -19,11 +19,11 @@ router.get("/", middleware.isLoggedIn, (req, res, next) => {
       throw err;
     } else {
       res.render("adventure", {char: char[0],
-                           waepon: char[1], 
-                           armor: char[2],
-                           helmet: char[3],
-                           legs: char[4],
-                           mobs: char[5]
+                              waepon: char[1], 
+                              armor: char[2],
+                              helmet: char[3],
+                              legs: char[4],
+                              mobs: char[5]
       });
     }
   });

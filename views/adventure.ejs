@@ -19,7 +19,7 @@
                     <p class="card-text">Physical Armor: <%= mobs[i].min_physical_armor %> - <%= mobs[i].max_physical_armor %> </p>
                     <p class="card-text">Energy Armor: <%= mobs[i].min_energy_armor %> - <%= mobs[i].max_energy_armor %> </p>
                 </div>
-                <a href="#" class="btn btn-secondary float-right">Fight!</a>
+                    <a href="/fight/<%= mobs[i].mob_name %>" class="btn btn-secondary float-right">Fight!</a>
             </div>
         </div>
     <% } %>

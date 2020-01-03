@@ -32,7 +32,7 @@ router.get("/", (req, res) => {
             
                 // *********** GENERATE NEW MOB STATS
                 
-                mob.hp = Math.floor(Math.random()*(baseMax_hp - baseMin_hp + 1) + baseMin_hp)
+                mob.hp = parseInt(Math.floor(Math.random()*(baseMax_hp - baseMin_hp + 1) + baseMin_hp))
                 mob.physicalDmg = Math.floor(Math.random()*(baseMax_physical_dmg - baseMin_physical_dmg + 1) + baseMin_physical_dmg)
                 mob.energyDmg = Math.floor(Math.random()*(baseMax_energy_dmg - baseMin_energy_dmg + 1) + baseMin_energy_dmg)
                 mob.physicalArmor = Math.floor(Math.random()*(baseMax_physical_armor - baseMin_physical_armor + 1) + baseMin_physical_armor)
@@ -61,13 +61,13 @@ router.get("/", (req, res) => {
             }
         }
         retry();
-        console.log(mob.start)
-        console.log(char.start)
+        console.log("Mob Start: " + mob.start)
+        console.log("Char Start: " + char.start)
     }
     whoStart()
 
     function fight(mob, char) {
-        console.log('From fight function: ' + mob.hp)
+        console.log(mob.hp)
         
     
     }

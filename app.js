@@ -10,7 +10,8 @@ const loginRoutes = require("./routes/login");
 const signupRoutes = require("./routes/signup");
 const logoutRoutes = require("./routes/logout");
 const testRoutes = require("./routes/test");
-const adventureRoutes = require("./routes/adventure")
+const adventureRoutes = require("./routes/adventure");
+const fightRoutes = require("./routes/fight")
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -30,7 +31,7 @@ app.use(session({
   resave: true,
   cookie: true,
   saveUninitialized: true,
-  cookie: { maxAge: 20000 }
+  cookie: { maxAge: 300000 }
 }))
 
 app.use(function(req, res, next) {
@@ -39,8 +40,9 @@ app.use(function(req, res, next) {
 });
 
 app.use(cookieParser());
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json()); 
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
@@ -62,7 +64,8 @@ app.use("/login", loginRoutes),
 app.use("/signup", signupRoutes),
 app.use("/logout", logoutRoutes),
 app.use("/test", testRoutes),
-app.use("/adventure", adventureRoutes)
+app.use("/adventure", adventureRoutes),
+app.use("/fight", fightRoutes)
 
 app.listen(3000, () => {
     console.log('Server running on port: 3000');
