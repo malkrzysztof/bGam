@@ -1,7 +1,7 @@
 const express = require("express");
 const session = require('express-session');
 const router = express.Router();
-const middleware = require("../middleware");
+const middleware = require("../middleware/middleware");
 
 router.get("/", middleware.isLoggedIn, (req, res) => {
   user_id = req.session.user_id

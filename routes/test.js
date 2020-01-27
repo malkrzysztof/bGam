@@ -5,83 +5,60 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const myPlaintextPassword = '1234';
 const someOtherPlaintextPassword = 'not_bacon';
+const middleware = require("../middleware/middleware");
 
-var mob = {}
-var char = {}
+// var mob = {}
+// var char = {}
 
-router.get("/", (req, res) => {
-
-    
-    function generateMob(mobName) {   
-    // *********** GET BASE STATS FROM DB
-        var sql = 'SELECT * FROM mob WHERE mob_name = ?'
-        db.query(sql, [mobName], function(err, results, fields) {
-            if (err){
-                throw err
-            } else {
-                baseMin_hp = parseInt(results[0].min_hp),
-                baseMax_hp = parseInt(results[0].max_hp),
-                baseMin_physical_dmg = parseInt(results[0].min_physical_dmg)
-                baseMax_physical_dmg = parseInt(results[0].max_physical_dmg)
-                baseMin_energy_dmg = parseInt(results[0].min_energy_dmg)
-                baseMax_energy_dmg = parseInt(results[0].max_energy_dmg)
-                baseMin_physical_armor = parseInt(results[0].min_physical_armor)
-                baseMax_physical_armor = parseInt(results[0].max_physical_armor)
-                baseMin_energy_armor = parseInt(results[0].min_energy_armor)
-                baseMax_energy_armor = parseInt(results[0].max_energy_armor)
-            
-                // *********** GENERATE NEW MOB STATS
-                
-                mob.hp = parseInt(Math.floor(Math.random()*(baseMax_hp - baseMin_hp + 1) + baseMin_hp))
-                mob.physicalDmg = Math.floor(Math.random()*(baseMax_physical_dmg - baseMin_physical_dmg + 1) + baseMin_physical_dmg)
-                mob.energyDmg = Math.floor(Math.random()*(baseMax_energy_dmg - baseMin_energy_dmg + 1) + baseMin_energy_dmg)
-                mob.physicalArmor = Math.floor(Math.random()*(baseMax_physical_armor - baseMin_physical_armor + 1) + baseMin_physical_armor)
-                mob.energyArmor = Math.floor(Math.random()*(baseMax_energy_armor - baseMin_energy_armor + 1) + baseMin_energy_armor)
-                console.log(mob)
-        
-                
-                // *********** GENERATE CHAR
-                
-                char.hp = 10
-                char.str = 8
-                char.dex = 5
-                char.int = 3
-                
-            }        
-        })
-    }
-
-    function whoStart() {
-        mob.start = Math.floor(Math.random() * (10 - 1 + 1) + 1)
-        char.start = Math.floor(Math.random() * (10 - 1 + 1) + 1)
-        function retry() {
-            if (mob.start == char.start) {
-                mob.start = Math.floor(Math.random() * (10 - 1 + 1) + 1)
-                char.start = Math.floor(Math.random() * (10 - 1 + 1) + 1)
-            }
-        }
-        retry();
-        console.log("Mob Start: " + mob.start)
-        console.log("Char Start: " + char.start)
-    }
-    whoStart()
-
-    function fight(mob, char) {
-        console.log(mob.hp)
-        
-    
-    }
-    
-    fight(mob)
-        
-    generateMob("Dog")
-
-    
-    
+router.get("/", middleware.isLoggedIn, (req, res) => {
+    let sql = "SELECT * FROM `6687_bgame`.`characters` WHERE user_id="+ user_id +";" + 
+    "SELECT * FROM `6687_bgame`.`waepon` WHERE user_id="+ user_id +";" +
+    "SELECT * FROM `6687_bgame`.`armor` WHERE user_id="+ user_id +";" +
+    "SELECT * FROM `6687_bgame`.`helmet` WHERE user_id="+ user_id +";" +
+    "SELECT * FROM `6687_bgame`.`legs` WHERE user_id="+ user_id +";" +
+    "SELECT * FROM `6687_bgame`.`mob` WHERE mob_name='"+ mobName +"';"
 
 
-    res.render("test")
-})
 
+    var mobName = req.param.mobName
+    user_id = req.session.user_id
+    email = req.session.email
+
+    dane();
+
+    async function dane() {
+        console.log('test pobieram');
+        const data = await pobierzDane();
+        console.log('test pobrane')
+        res.render("fight", {char: data[0],
+                            waepon: data[1],
+                            armor: data[2],
+                            helmet: data[3],
+                            legs: data[4],
+                            mob: data[5]
+        });
+        char = data[0]
+        waepon = data[1]
+        armor = data[2]
+        helmet = data[3]
+        legs = data[4]
+        mob = data[5]
+        middleware.whoStart()
+    };
+
+
+        function pobierzDane() {
+            return new Promise(resolve => {
+                db.query(sql, function (err, results){
+                    if (err) {
+                        throw err;
+                    } else {
+                        resolve(results)
+                    }
+                })
+            });
+        };
+
+});
 
 module.exports = router;

@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 });
 
 app.use(session({
-  secret: '',
+  secret: 'alw@ysSecret23%$Shhh!',
   resave: true,
   cookie: true,
   saveUninitialized: true,
@@ -39,6 +39,14 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use(function(req, res, next) {
+  if (req.url === '/favicon.ico') {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end();
+  }
+  next();
+});
+
 app.use(cookieParser());
 // app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -47,16 +55,19 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
 db = mysql.createConnection({
-  host     : "",
+  host     : "sefin.atthost24.pl",
   user     : "6687_bgame",
-  password : "",
+  password : "Brat!@34",
   database : "6687_bgame",
   multipleStatements: true
 });
 
 db.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
+  if (err) {
+    throw err
+  } else {
+  console.log("Connected to DB!")
+  };
 });
 
 app.use("/", indexRoutes),
