@@ -24,9 +24,9 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
     "SELECT * FROM `6687_bgame`.`legs` WHERE user_id="+ user_id +";" +
     "SELECT * FROM `6687_bgame`.`mob` WHERE mob_name='"+ mobName +"';"
 
-    dane();
+    main();
 
-    async function dane() {
+    async function main() {
         console.log('pobieram');
         const data = await pobierzDane();
         console.log('pobrane')
@@ -83,24 +83,26 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
             mob.energyDmg = Math.floor(Math.random()*(baseMax_energy_dmg - baseMin_energy_dmg + 1) + baseMin_energy_dmg)
             mob.physicalArmor = Math.floor(Math.random()*(baseMax_physical_armor - baseMin_physical_armor + 1) + baseMin_physical_armor)
             mob.energyArmor = Math.floor(Math.random()*(baseMax_energy_armor - baseMin_energy_armor + 1) + baseMin_energy_armor)
-
     }
 
     function fight() {
         if (mobStart > charStart) {
             st = mob
-            nd = char
+            nd = char[0]
         } else {
-            st = char
+            st = char[0]
             nd = mob
         }
+
+        char[0].name = char[0].char_name
         char[0].hp = char[0].char_hp
         char[0].physicalDmg = parseInt((char[0].char_str * 0.6) + (waepon[0].physical_dmg * 0.4))
         char[0].physicalArmor = parseInt((char[0].char_str * 0.35) + (char[0].char_dex, 0.35) + multi(helmet, 0.4) + multi(legs, 0.3) + multi(armor, 0.6))
-
         console.log("char physical DMG: " + char[0].physicalDmg)
         console.log("char physical armor: " + char[0].physicalArmor)
         
+        doDmg()
+
         // *********************************************************FUNCTIONS TO FIGHT
         function multi(a, x){
             if (a[0] == undefined) {
@@ -110,6 +112,22 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
             }
         }
         function doDmg () {
+            // console.log("first: " + st.name)
+            // console.log("second: " + nd.name)
+            // console.log(char[0].hp)
+            if (char[0].hp > 0 && mob.hp > 0) {
+                console.log("walka")
+                var dmg = (st.physicalDmg - nd.physicalArmor)
+                // obsługa ujemnego DMG jako chybił.
+                nd.hp -= dmg
+                console.log(nd.name + " otrzymuje " + dmg + " obrażeń")
+            } else {
+                if (char[0].hp <= 0) {
+                    console.log("u lose")
+                } else {
+                    console.log("u win")
+                }
+            }
         }
     }
 
