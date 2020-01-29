@@ -92,7 +92,7 @@ function up(){
         // console.log("Characters HP ++1")
       }
     })
-  }, 10000);
+  }, 20000);
 }
 up()
 
