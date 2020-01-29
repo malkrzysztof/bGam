@@ -82,4 +82,18 @@ app.listen(3000, () => {
     console.log('Server running on port: 3000');
 });
 
+function up(){
+  setInterval(() => {
+    update = "UPDATE `6687_bgame`.`characters` SET `characters`.`char_hp` = `characters`.`char_hp` + 1 WHERE `characters`.`char_hp` < `characters`.`char_hp_max`"
+    db.query(update, function(err){
+      if (err){
+        throw err
+      } else {
+        // console.log("Characters HP ++1")
+      }
+    })
+  }, 10000);
+}
+up()
+
 module.exports = app;
