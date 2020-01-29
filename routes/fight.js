@@ -193,12 +193,6 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
             })
         }
     }
-
-
-
-
-
-
 });
 
 module.exports = router;
