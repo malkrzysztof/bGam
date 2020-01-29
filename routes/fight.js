@@ -14,7 +14,7 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
     var mobName = req.params.mobName
     user_id = req.session.user_id
     email = req.session.email
-
+    var info
     let sql = "SELECT * FROM `6687_bgame`.`characters` WHERE user_id="+ user_id +";" + 
     "SELECT * FROM `6687_bgame`.`waepon` WHERE user_id="+ user_id +";" +
     "SELECT * FROM `6687_bgame`.`armor` WHERE user_id="+ user_id +";" +
@@ -28,7 +28,7 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
         // console.log('pobieram');
         var data = await pobierzDane();
         // console.log('pobrane')
-        char = data[0]
+        char = data[0] // wrzucić całe przypisanie data do funkcji pobierzDane
         waepon = data[1]
         armor = data[2]
         helmet = data[3]
@@ -36,7 +36,12 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
         baseMob = data[5][0]
         middleware.whoStart()
         generateMob(baseMob)
-        await fight()
+        if (char[0].char_hp == 0) {
+            console.log("u cant fight")
+            res.redirect("/adventure")
+        } else {
+            await fight()
+        }
         data = await pobierzDane();
         char = data[0]
         waepon = data[1]
@@ -45,6 +50,7 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
         legs = data[4]
         baseMob = data[5][0]
         render()
+        console.log(info)
     }
 
     function pobierzDane() {
@@ -65,6 +71,7 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
         armor: armor,
         helmet: helmet,
         legs: legs,
+        info
         })
     };
 
@@ -81,7 +88,7 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
             baseMin_energy_armor = parseInt(baseMob.min_energy_armor)
             baseMax_energy_armor = parseInt(baseMob.max_energy_armor)
         
-            // *********** GENERATE NEW MOB STATS
+        // *********** GENERATE NEW MOB STATS
             mob.name = mobName
             mob.hp = Math.floor(Math.random()*(baseMax_hp - baseMin_hp + 1) + baseMin_hp)
             mob.physicalDmg = Math.floor(Math.random()*(baseMax_physical_dmg - baseMin_physical_dmg + 1) + baseMin_physical_dmg)
@@ -91,19 +98,29 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
     }
 
     async function fight() {
+        i = 2
         if (mobStart > charStart) {
             st = mob
             nd = char[0]
+            a = "Walkę rozpoczyna " + mob.name
+            console.log(a)
+            info = "1." + a + " "
         } else {
             st = char[0]
             nd = mob
-        }
+            a = "Walkę rozpoczyna " + char[0].char_name
+            console.log(a)
+            info = "1." + a + " "
+        } 
         char[0].name = char[0].char_name
         char[0].hp = char[0].char_hp
         char[0].physicalDmg = parseInt((char[0].char_str * 0.6) + (waepon[0].physical_dmg * 0.4))
         char[0].physicalArmor = parseInt((char[0].char_str * 0.35) + (char[0].char_dex, 0.35) + multi(helmet, 0.4) + multi(legs, 0.3) + multi(armor, 0.6))
         // console.log("char physical DMG: " + char[0].physicalDmg)
         // console.log("char physical armor: " + char[0].physicalArmor)
+
+        dmg()
+        updateHP()
 
         // *********************************************************FUNCTIONS TO FIGHT
         function multi(a, x){
@@ -118,30 +135,47 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
             while (st.hp > 0 || nd.hp > 0) {
                 let stDmg = (st.physicalDmg - nd.physicalArmor)
                 if (stDmg <= 0) {
-                    console.log(st.name + " chybił")
+                    a = st.name + " chybił"
+                    console.log(a)
+                    addInfo()
                 } else {
                     nd.hp -= stDmg
-                    console.log(nd.name + " otrzymuje " + stDmg + " obrażeń. Pozostało mu " + nd.hp + " hp.")
+                    a = nd.name + " otrzymuje " + stDmg + " obrażeń. Pozostało mu " + nd.hp + " hp."
+                    console.log(a)
+                    addInfo()
                     if (nd.hp < 0){
-                        console.log("Walke wygrał " + st.name)
+                        i++
+                        a = "Walke wygrał " + st.name
+                        console.log(a)
+                        addInfo()
                         break
                     }
                 }
+                i++
                 let ndDmg = (nd.physicalDmg - st.physicalArmor)
                 if (ndDmg <= 0) {
-                    console.log(nd.name + " chybił")
+                    a = nd.name + " chybił"
+                    console.log(a)
+                    addInfo()
                 } else {
                     st.hp -= ndDmg
-                    console.log(st.name + " otrzymuje " + ndDmg + " obrażeń. Pozostało mu " + st.hp + " hp.")
+                    a = st.name + " otrzymuje " + ndDmg + " obrażeń. Pozostało mu " + st.hp + " hp."
+                    console.log(a)
+                    addInfo()
                     if (st.hp < 0){
-                        console.log("Walke wygrał " + nd.name)
+                        i++
+                        a = "Walke wygrał " + nd.name
+                        console.log(a)
+                        addInfo()
                         break
                     }
                 }
-                console.log("char hp: " + char[0].hp)
+                i++
+            }
+            function addInfo(){
+                info += i + "." + a + " " + "\n"
             }
         }
-        dmg()
         //******************** Update DB
         var sqlUpdate
         function updateHP(){
@@ -151,17 +185,14 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
                 char[0].hp = char[0].hp
             }
             sqlUpdate = "UPDATE `6687_bgame`.`characters` SET  `characters`.`char_hp` = " + char[0].hp + " WHERE user_id= "+ user_id +";"
-            console.log ("sqlUpdate: " + sqlUpdate)
+            // console.log ("From updateHP function - sqlUpdate: " + sqlUpdate)
             db.query(sqlUpdate, function(err){
                 if (err) {
                     throw err
                 }
             })
         }
-        updateHP()
     }
 });
-
-
 
 module.exports = router;
