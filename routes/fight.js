@@ -1,6 +1,4 @@
 const express = require("express");
-const session = require('express-session');
-const bodyParser = require('body-parser');
 const router = express.Router();
 const middleware = require("../middleware/middleware");
 
@@ -27,9 +25,9 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
     main();
 
     async function main() {
-        console.log('pobieram');
-        const data = await pobierzDane();
-        console.log('pobrane')
+        // console.log('pobieram');
+        var data = await pobierzDane();
+        // console.log('pobrane')
         char = data[0]
         waepon = data[1]
         armor = data[2]
@@ -37,9 +35,16 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
         legs = data[4]
         baseMob = data[5][0]
         middleware.whoStart()
-        render()
         generateMob(baseMob)
-        fight()
+        await fight()
+        data = await pobierzDane();
+        char = data[0]
+        waepon = data[1]
+        armor = data[2]
+        helmet = data[3]
+        legs = data[4]
+        baseMob = data[5][0]
+        render()
     }
 
     function pobierzDane() {
@@ -85,7 +90,7 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
             mob.energyArmor = Math.floor(Math.random()*(baseMax_energy_armor - baseMin_energy_armor + 1) + baseMin_energy_armor)
     }
 
-    function fight() {
+    async function fight() {
         if (mobStart > charStart) {
             st = mob
             nd = char[0]
@@ -93,15 +98,12 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
             st = char[0]
             nd = mob
         }
-
         char[0].name = char[0].char_name
         char[0].hp = char[0].char_hp
         char[0].physicalDmg = parseInt((char[0].char_str * 0.6) + (waepon[0].physical_dmg * 0.4))
         char[0].physicalArmor = parseInt((char[0].char_str * 0.35) + (char[0].char_dex, 0.35) + multi(helmet, 0.4) + multi(legs, 0.3) + multi(armor, 0.6))
-        console.log("char physical DMG: " + char[0].physicalDmg)
-        console.log("char physical armor: " + char[0].physicalArmor)
-        
-        doDmg()
+        // console.log("char physical DMG: " + char[0].physicalDmg)
+        // console.log("char physical armor: " + char[0].physicalArmor)
 
         // *********************************************************FUNCTIONS TO FIGHT
         function multi(a, x){
@@ -111,26 +113,53 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
                 return parseInt(a[0].physical_armor *= x)
             }
         }
-        function doDmg () {
-            // console.log("first: " + st.name)
-            // console.log("second: " + nd.name)
-            // console.log(char[0].hp)
-            if (char[0].hp > 0 && mob.hp > 0) {
-                console.log("walka")
-                var dmg = (st.physicalDmg - nd.physicalArmor)
-                // obsługa ujemnego DMG jako chybił.
-                nd.hp -= dmg
-                console.log(nd.name + " otrzymuje " + dmg + " obrażeń")
-            } else {
-                if (char[0].hp <= 0) {
-                    console.log("u lose")
+
+        function dmg(){
+            while (st.hp > 0 || nd.hp > 0) {
+                let stDmg = (st.physicalDmg - nd.physicalArmor)
+                if (stDmg <= 0) {
+                    console.log(st.name + " chybił")
                 } else {
-                    console.log("u win")
+                    nd.hp -= stDmg
+                    console.log(nd.name + " otrzymuje " + stDmg + " obrażeń. Pozostało mu " + nd.hp + " hp.")
+                    if (nd.hp < 0){
+                        console.log("Walke wygrał " + st.name)
+                        break
+                    }
                 }
+                let ndDmg = (nd.physicalDmg - st.physicalArmor)
+                if (ndDmg <= 0) {
+                    console.log(nd.name + " chybił")
+                } else {
+                    st.hp -= ndDmg
+                    console.log(st.name + " otrzymuje " + ndDmg + " obrażeń. Pozostało mu " + st.hp + " hp.")
+                    if (st.hp < 0){
+                        console.log("Walke wygrał " + nd.name)
+                        break
+                    }
+                }
+                console.log("char hp: " + char[0].hp)
             }
         }
+        dmg()
+        //******************** Update DB
+        var sqlUpdate
+        function updateHP(){
+            if (char[0].hp < 0){
+                char[0].hp = 0
+            } else {
+                char[0].hp = char[0].hp
+            }
+            sqlUpdate = "UPDATE `6687_bgame`.`characters` SET  `characters`.`char_hp` = " + char[0].hp + " WHERE user_id= "+ user_id +";"
+            console.log ("sqlUpdate: " + sqlUpdate)
+            db.query(sqlUpdate, function(err){
+                if (err) {
+                    throw err
+                }
+            })
+        }
+        updateHP()
     }
-
 });
 
 

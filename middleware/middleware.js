@@ -21,7 +21,7 @@ module.exports = {
             }
         }
         retry();
-        console.log("Mob Start: " + mobStart)
-        console.log("Char Start: " + charStart)
+        // console.log("Mob Start: " + mobStart)
+        // console.log("Char Start: " + charStart)
     }
 }
