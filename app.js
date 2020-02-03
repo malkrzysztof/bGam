@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 });
 
 app.use(session({
-  secret: '',
+  secret: 'shh!',
   resave: true,
   cookie: true,
   saveUninitialized: true,
@@ -55,10 +55,10 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
 db = mysql.createConnection({
-  host     : "",
-  user     : "",
-  password : "",
-  database : "",
+  host     : "sefin.atthost24.pl",
+  user     : "6687_bgame",
+  password : "Brat!@34",
+  database : "6687_bgame",
   multipleStatements: true
 });
 
@@ -96,5 +96,26 @@ function up(){
   }, 20000);
 }
 up()
+
+
+
+
+// ********************* EXP SYSTEM
+// ((lvl+1)^1,5)*100
+
+function seedExp(i){
+  var exp
+  setInterval(() =>{
+    for (i; i <= 500; i++){
+      exp = ((i + 1)^1.5)*100
+      s = "INSERT INTO `6687_bgame`.`lvl` VALUES(" + i + "," + exp + ");"
+      db.query(s, function(err){
+        if (err) {throw err} else {console.log("Dodałem " + i + "rekord")}
+      })
+    }
+  }, 1000);
+}
+
+seedExp(2)
 
 module.exports = app;
