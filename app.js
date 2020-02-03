@@ -84,7 +84,8 @@ app.listen(3000, () => {
 
 function up(){
   setInterval(() => {
-    update = "UPDATE `6687_bgame`.`characters` SET `characters`.`char_hp` = `characters`.`char_hp` + 1 WHERE `characters`.`char_hp` < `characters`.`char_hp_max`"
+    update = "UPDATE `6687_bgame`.`characters` SET `characters`.`char_hp` = `characters`.`char_hp` + 1 WHERE `characters`.`char_hp` < `characters`.`char_hp_max`;" + 
+              "UPDATE `6687_bgame`.`characters` SET `characters`.`char_moves` = `characters`.`char_moves` + 1 WHERE `characters`.`char_moves` < 100;"
     db.query(update, function(err){
       if (err){
         throw err
