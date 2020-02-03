@@ -102,15 +102,15 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
         if (mobStart > charStart) {
             st = mob
             nd = char[0]
-            a = "Walkę rozpoczyna " + mob.name
+            a = "Walkę rozpoczyna " + mob.name + "."
             console.log(a)
-            info = "1." + a + " "
+            info = "1." + a + "\n"
         } else {
             st = char[0]
             nd = mob
-            a = "Walkę rozpoczyna " + char[0].char_name
+            a = "Walkę rozpoczyna " + char[0].char_name + "."
             console.log(a)
-            info = "1." + a + " "
+            info = "1." + a + "\n"
         } 
         char[0].name = char[0].char_name
         char[0].hp = char[0].char_hp
@@ -135,7 +135,7 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
             while (st.hp > 0 || nd.hp > 0) {
                 let stDmg = (st.physicalDmg - nd.physicalArmor)
                 if (stDmg <= 0) {
-                    a = st.name + " chybił"
+                    a = st.name + " chybił."
                     console.log(a)
                     addInfo()
                 } else {
@@ -145,7 +145,7 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
                     addInfo()
                     if (nd.hp < 0){
                         i++
-                        a = "Walke wygrał " + st.name
+                        a = "Walke wygrał " + st.name + "."
                         console.log(a)
                         addInfo()
                         break
@@ -154,7 +154,7 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
                 i++
                 let ndDmg = (nd.physicalDmg - st.physicalArmor)
                 if (ndDmg <= 0) {
-                    a = nd.name + " chybił"
+                    a = nd.name + " chybił."
                     console.log(a)
                     addInfo()
                 } else {
@@ -164,7 +164,7 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
                     addInfo()
                     if (st.hp < 0){
                         i++
-                        a = "Walke wygrał " + nd.name
+                        a = "Walke wygrał " + nd.name + "."
                         console.log(a)
                         addInfo()
                         break
@@ -173,7 +173,7 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
                 i++
             }
             function addInfo(){
-                info += i + "." + a + " " + "\n"
+                info += i + "." + a + "\n"
             }
         }
         //******************** Update DB
@@ -184,7 +184,8 @@ router.get("/:mobName", middleware.isLoggedIn, (req, res, next) => {
             } else {
                 char[0].hp = char[0].hp
             }
-            sqlUpdate = "UPDATE `6687_bgame`.`characters` SET  `characters`.`char_hp` = " + char[0].hp + " WHERE user_id= "+ user_id +";"
+            sqlUpdate = "UPDATE `6687_bgame`.`characters` SET  `characters`.`char_hp` = " + char[0].hp + " WHERE user_id= "+ user_id + ";" +
+                        "UPDATE `6687_bgame`.`characters` SET  `characters`.`char_moves` = `characters`.`char_moves` - 1  WHERE user_id= "+ user_id +";"
             // console.log ("From updateHP function - sqlUpdate: " + sqlUpdate)
             db.query(sqlUpdate, function(err){
                 if (err) {
