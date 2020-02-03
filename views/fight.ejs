@@ -2,7 +2,8 @@
 <% include ./partials/char.ejs %>
 
 <div class="content">
-    <%= info %>
+    <% var info1 = info.replace(new RegExp("\n", "g"), '<br>') %>
+    <%- info1 %>
 </div>
 
 <% include ./partials/inventory.ejs %>
